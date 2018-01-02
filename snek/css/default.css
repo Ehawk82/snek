@@ -1,2 +1,45 @@
 ﻿body {
+
+}
+canvas {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    border: 1px solid #FFFFFF;
+    background-image: url("../images/assets_3/grass.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+    color:#fff;
+}
+
+div {
+    color:#FFFFFF !important;
+}
+table {
+ width:200px;
+ clear:both;
+ float:right;
+ box-shadow:0 0 3px #fff inset;
+ text-indent:5%;
+}
+
+.startBTN {
+    position:fixed;
+    top:40%;
+    left:20%;
+}
+.myHiChart {
+    float:left;
+}
+.snekBox {
+    width: 20px;
+    height: 20px;
+    text-align:center !important;
+    box-shadow:0 0 10px rgba(0,0,0,0) inset;
+}
+.snekBox_active {
+    width: 20px;
+    height: 20px;
+    text-align: center !important;
+    box-shadow: 0 0 19px yellow inset;
 }

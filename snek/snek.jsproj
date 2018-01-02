@@ -52,14 +52,36 @@
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>$(VersionNumberMajor).$(VersionNumberMinor)</MinimumVisualStudioVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
-    
     <PackageCertificateKeyFile>snek_TemporaryKey.pfx</PackageCertificateKeyFile>
-    
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="images\assets_0\body.png" />
+    <Content Include="images\assets_0\food.png" />
+    <Content Include="images\assets_0\grass.jpg" />
+    <Content Include="images\assets_0\head.png" />
+    <Content Include="images\assets_0\tail.png" />
+    <Content Include="images\assets_0\void.png" />
+    <Content Include="images\assets_1\body.png" />
+    <Content Include="images\assets_1\food.png" />
+    <Content Include="images\assets_1\grass.jpg" />
+    <Content Include="images\assets_1\head.png" />
+    <Content Include="images\assets_1\tail.png" />
+    <Content Include="images\assets_1\void.png" />
+    <Content Include="images\assets_2\body.png" />
+    <Content Include="images\assets_2\food.png" />
+    <Content Include="images\assets_2\grass.jpg" />
+    <Content Include="images\assets_2\head.png" />
+    <Content Include="images\assets_2\tail.png" />
+    <Content Include="images\assets_2\void.png" />
+    <Content Include="images\assets_3\grass.jpg" />
+    <Content Include="images\assets_3\void.png" />
+    <Content Include="images\assets_3\body.png" />
+    <Content Include="images\assets_3\food.png" />
+    <Content Include="images\assets_3\head.png" />
+    <Content Include="images\assets_3\tail.png" />
     <Content Include="index.html" />
     <Content Include="images\LockScreenLogo.scale-200.png" />
     <Content Include="images\SplashScreen.scale-200.png" />
@@ -75,9 +97,7 @@
     <Content Include="lib\winjs-4.0.1\css\ui-light.css" />
     <Content Include="lib\winjs-4.0.1\css\ui-dark.css" />
     <Content Include="lib\winjs-4.0.1\fonts\Symbols.ttf" />
-    
     <None Include="snek_TemporaryKey.pfx" />
-    
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
   <!-- To modify your build process, add your task inside one of the targets below then uncomment
