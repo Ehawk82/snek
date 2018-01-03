@@ -45,3 +45,47 @@ table {
     text-align: center !important;
     box-shadow: 0 0 19px yellow inset;
 }
+.cntrl_frame_btns {
+    transition: all 500ms;
+    border: 5px solid transparent;
+    font-size: 1.5em;
+    background: transparent;
+}
+    .cntrl_frame_btns:hover {
+        transition: all 500ms;
+        border: 5px solid #ffff68;
+    }
+    .cntrl_frame_btns:active {
+        transition:all 500ms;
+        background: #ffff68;
+    }
+    /*id's*/
+#cntrl_frame {
+        position: absolute;
+        top: 40%;
+        right: 10%;
+
+        padding: 8px;
+}
+#upBtn {
+    margin: 1px auto;
+    display: block;
+    width: 48%;
+}
+#leftBtn {
+    margin: 1px 0;
+    float:left;
+    display: block;
+    width: 48%;
+}
+#rightBtn {
+    float: right;
+    margin: 1px 0;
+    display: block;
+    width: 48%;
+}
+#downBtn {
+    margin: 1px auto;
+    display: block;
+    width: 48%;
+}

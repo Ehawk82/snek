@@ -6,7 +6,11 @@
 
 	var app = WinJS.Application;
 	var activation = Windows.ApplicationModel.Activation;
-	var isFirstActivation = true;
+    var isFirstActivation = true;
+
+    var ViewManagement = Windows.UI.ViewManagement;
+    var ApplicationViewWindowingMode = ViewManagement.ApplicationViewWindowingMode;
+    var ApplicationView = ViewManagement.ApplicationView;
 
 	app.onactivated = function (args) {
 		if (args.detail.kind === activation.ActivationKind.voiceCommand) {
@@ -38,7 +42,8 @@
 		if (isFirstActivation) {
 			// TODO: The app was activated and had not been running. Do general startup initialization here.
 			document.addEventListener("visibilitychange", onVisibilityChanged);
-			args.setPromise(WinJS.UI.processAll());
+            args.setPromise(WinJS.UI.processAll());
+            ApplicationView.preferredLaunchWindowingMode = ApplicationViewWindowingMode.fullScreen;
 		}
 
 		isFirstActivation = false;
@@ -83,6 +88,7 @@
         createEle: (x) => { return document.createElement(x); },
         myLoad: () => {
             window.addEventListener("keydown", moveSnake, false);
+
             var game_over = false;
             var snake = new Array(4);
             var snakeLen = 4;
@@ -441,6 +447,88 @@
                 context.restore();
             }
         },
+        makeWindowController: () => {
+            var up = UI.createEle("button"),
+                left = UI.createEle("button"),
+                right = UI.createEle("button"),
+                down = UI.createEle("button");
+
+            up.innerHTML = "⬆";
+            up.id = "upBtn";
+            up.onclick = UI.returnUP();
+            up.className = "cntrl_frame_btns";
+
+            left.innerHTML = "⬅";
+            left.id = "leftBtn";
+            left.onclick = UI.returnLEFT();
+            left.className = "cntrl_frame_btns";
+
+            right.innerHTML = "➡";
+            right.id = "rightBtn";
+            right.onclick = UI.returnRIGHT();
+            right.className = "cntrl_frame_btns";
+
+            down.innerHTML = "⬇";
+            down.id = "downBtn";
+            down.onclick = UI.returnDOWN();
+            down.className = "cntrl_frame_btns";
+
+
+            cntrl_frame.appendChild(up);
+            cntrl_frame.appendChild(left);
+            cntrl_frame.appendChild(right);
+            cntrl_frame.appendChild(down);
+
+
+        },
+        returnUP: () => {
+            return () => {
+                KeySimulation();
+                function KeySimulation() {
+                    var e = document.createEvent("KeyboardEvent");
+                    if (e.initKeyboardEvent) {
+                        e.initKeyboardEvent("keydown", true, true, document.defaultView, "Up", 38, "", false, "");
+                    }
+                    window.dispatchEvent(e);
+                }
+            }
+        },
+        returnLEFT: () => {
+            return () => {
+                KeySimulation();
+                function KeySimulation() {
+                    var e = document.createEvent("KeyboardEvent");
+                    if (e.initKeyboardEvent) {
+                        e.initKeyboardEvent("keydown", true, true, document.defaultView, "Left", 37, "", false, "");
+                    }
+                    window.dispatchEvent(e);
+                }
+            }
+        },
+        returnRIGHT: () => {
+            return () => {
+                KeySimulation();
+                function KeySimulation() {
+                    var e = document.createEvent("KeyboardEvent");
+                    if (e.initKeyboardEvent) {
+                        e.initKeyboardEvent("keydown", true, true, document.defaultView, "Right", 39, "", false, "");
+                    }
+                    window.dispatchEvent(e);
+                }
+            }
+        },
+        returnDOWN: () => {
+            return () => {
+                KeySimulation();
+                function KeySimulation() {
+                    var e = document.createEvent("KeyboardEvent");
+                    if (e.initKeyboardEvent) {
+                        e.initKeyboardEvent("keydown", true, true, document.defaultView, "Down", 40, "", false, "");
+                    }
+                    window.dispatchEvent(e);
+                }
+            }
+        },
         init: () => {
             var colorPick = localStorage.getItem("colorPick");
             if (!colorPick) {
@@ -539,7 +627,7 @@
                 hhh[nm] = snLen;
                 localStorage.setItem("myHi", JSON.stringify(hhh));
             }
-            console.log(hhh[nm]);
+
         },
         colorSelected: (elems, k) => {
             return () => {
@@ -551,6 +639,7 @@
         startProcess: (startBTN) => {
             return () => {
                 startBTN.remove();
+                UI.makeWindowController();
                 setTimeout(() => {
                     UI.myLoad();
                 }, 200);
