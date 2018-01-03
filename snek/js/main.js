@@ -59,14 +59,22 @@
 
     var UI, myHi, colors;
 
-    myHi = 0;
+    myHi = {
+        green: 0,
+        brown: 0,
+        blue: 0,
+        lime: 0
+    };
 
     colors = ["#256432", "#856343", "#244452", "#6CFA04"];
 
     var heads = ["../images/assets_0/head.png", "../images/assets_1/head.png", "../images/assets_2/head.png", "../images/assets_3/head.png"];
-    var tails = ["../images/assets_0/tail.png", "../images/assets_2/tail.png", "../images/assets_2/tail.png", "../images/assets_3/tail.png"];
+    var tails = ["../images/assets_0/tail.png", "../images/assets_1/tail.png", "../images/assets_2/tail.png", "../images/assets_3/tail.png"];
     var bodys = ["./images/assets_0/body.png", "./images/assets_1/body.png", "./images/assets_2/body.png", "../images/assets_3/body.png"];
     var foods = ["../images/assets_0/food.png", "../images/assets_1/food.png", "../images/assets_2/food.png", "../images/assets_3/food.png"];
+    var grasses = ["../images/assets_0/grass.jpg", "../images/assets_1/grass.jpg", "../images/assets_2/grass.jpg", "../images/assets_3/grass.jpg"];
+    var names = ["green", "brown", "blue", "lime"];
+    var namesFormal = ["Green", "Brown", "Blue", "Lime"];
 
     UI = {
         byTag: (x) => { return document.getElementsByTagName(x); },
@@ -136,13 +144,20 @@
                 }
                 if (game_over == false) {
                     // clear
-                    var snLen = snakeLen - 4,
-                        myHi = localStorage.getItem("myHi");
-                    if (snLen >= +myHi) {
-                        localStorage.setItem("myHi", snLen);
+                    var snks = UI.bySel(".sneks");
+
+                    if (snks) {
+                        snks.remove();
                     }
+
+                    var snLen = snakeLen - 4,
+                        myHi = localStorage.getItem("myHi"),
+                        colorPick = localStorage.getItem("colorPick");
+
+                    UI.checkTracker(snakeLen);
+
                     context.clearRect(0, 0, canvas.width, canvas.height);
-                    displayText("Score: " + snLen) + "";
+                    displayText("Score: " + snLen + "");
                     display();
                 }
                 else {
@@ -434,31 +449,38 @@
                 localStorage.setItem("colorPick", colorPick);
             }
 
-            var myHi = localStorage.getItem("myHi");
-            if (!myHi) {
-
-                myHi = 0;
-                localStorage.setItem("myHi", myHi);
+            var mH = localStorage.getItem("myHi");
+            if (!mH || mH === null) {
+                localStorage.setItem("myHi", JSON.stringify(myHi));
             }
+            var mH = localStorage.getItem("myHi"),
+                nm = names[colorPick];
 
+            if (mH) {
+                var hhh = JSON.parse(mH);
+            }
             var body = UI.byTag("body"),
                 startBTN = UI.createEle("button"),
                 myHiChart = UI.createEle("td"),
                 myTable = UI.createEle("table"),
-                mySnakes = UI.createEle("table");
+                mySnakes = UI.createEle("table"),
+                canvas = UI.bySel("#myCanvas");
+
+            canvas.style.backgroundImage = "url(" + grasses[colorPick] + ")";
 
             startBTN.className = "startBTN";
             startBTN.innerHTML = "START";
             startBTN.onclick = UI.startProcess(startBTN);
 
             myHiChart.className = "myHiChart";
-            myHiChart.innerHTML = "" + myHi + "";
+            myHiChart.innerHTML = hhh[nm];
 
-            myTable.innerHTML = "<h2><strong>Highscore</strong></h2>";
+            myTable.innerHTML = "<h2><strong><span id='spnName'>" + names[colorPick] + "</span><br />Highscore</strong></h2>";
 
             myTable.appendChild(myHiChart);
 
             mySnakes.innerHTML = "sneks";
+            mySnakes.className = "sneks";
 
             for (var k = 0; k < 4; k++) {
                 var elems = UI.createEle("td");
@@ -470,6 +492,7 @@
 
                 mySnakes.appendChild(elems);
             }
+
             body[0].appendChild(startBTN);
             body[0].appendChild(myTable);
             body[0].appendChild(mySnakes);
@@ -477,7 +500,22 @@
             UI.checkSnek(elems);
         },
         checkSnek: () => {
-            var colorPick = localStorage.getItem("colorPick"), elems;
+            var colorPick = localStorage.getItem("colorPick"),
+                elems,
+                canvas = UI.bySel("#myCanvas"),
+                spnName = UI.bySel("#spnName"),
+                myHiChart = UI.bySel(".myHiChart");
+
+            canvas.style.backgroundImage = "url(" + grasses[colorPick] + ")";
+            spnName.innerHTML = namesFormal[colorPick];
+
+            var mH = localStorage.getItem("myHi"),
+                nm = names[colorPick];
+
+            if (mH) {
+                var hhh = JSON.parse(mH);
+            }
+            myHiChart.innerHTML = hhh[nm];
 
             elems = UI.bySelAll(".snekBox");
 
@@ -487,6 +525,21 @@
             elems[3].style.boxShadow = "0 0 10px rgba(0,0,0,0)";
 
             elems[colorPick].style.boxShadow = "0 0 10px yellow";
+        },
+        checkTracker: (snakeLen) => {
+            var snLen = snakeLen - 4,
+                myHi = localStorage.getItem("myHi"),
+                colorPick = localStorage.getItem("colorPick");
+
+            if (myHi) {
+                var hhh = JSON.parse(myHi);
+            }
+            var nm = names[colorPick]
+            if (snLen >= +hhh[nm]) {
+                hhh[nm] = snLen;
+                localStorage.setItem("myHi", JSON.stringify(hhh));
+            }
+            console.log(hhh[nm]);
         },
         colorSelected: (elems, k) => {
             return () => {
