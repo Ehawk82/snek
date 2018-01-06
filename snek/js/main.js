@@ -79,7 +79,7 @@
     var foods = ["../images/assets_0/food.png", "../images/assets_1/food.png", "../images/assets_2/food.png", "../images/assets_3/food.png"];
     var grasses = ["../images/assets_0/grass.jpg", "../images/assets_1/grass.jpg", "../images/assets_2/grass.jpg", "../images/assets_3/grass.jpg"];
     var names = ["green", "brown", "blue", "lime"];
-    var namesFormal = ["Green", "Brown", "Blue", "Lime"];
+    var namesFormal = ["Green Snek", "Brown Snek", "Blue Snek", "Lime Snek"];
 
     UI = {
         byTag: (x) => { return document.getElementsByTagName(x); },
@@ -181,7 +181,7 @@
             }
 
             function displayText(what) {
-                context.font = "30px Arial";
+                context.font = "40px Gothic";
  
                 context.fillText(what, 50, 50);
             }
@@ -453,22 +453,22 @@
                 right = UI.createEle("button"),
                 down = UI.createEle("button");
 
-            up.innerHTML = "⬆";
+            up.innerHTML = "&uarr;";
             up.id = "upBtn";
             up.onclick = UI.returnUP();
             up.className = "cntrl_frame_btns";
 
-            left.innerHTML = "⬅";
+            left.innerHTML = "&larr;";
             left.id = "leftBtn";
             left.onclick = UI.returnLEFT();
             left.className = "cntrl_frame_btns";
 
-            right.innerHTML = "➡";
+            right.innerHTML = "&rarr;";
             right.id = "rightBtn";
             right.onclick = UI.returnRIGHT();
             right.className = "cntrl_frame_btns";
 
-            down.innerHTML = "⬇";
+            down.innerHTML = "&darr;";
             down.id = "downBtn";
             down.onclick = UI.returnDOWN();
             down.className = "cntrl_frame_btns";
@@ -552,7 +552,16 @@
                 myHiChart = UI.createEle("td"),
                 myTable = UI.createEle("table"),
                 mySnakes = UI.createEle("table"),
-                canvas = UI.bySel("#myCanvas");
+                canvas = UI.bySel("#myCanvas"),
+                settBtn = UI.createEle("tr"),
+                settTDs = UI.createEle("td");
+
+            settTDs.innerHTML = "⚙";
+            settTDs.className = "settTDs";
+
+            settBtn.className = "settBtn";
+            settBtn.innerHTML = "&nbsp;";
+            settBtn.appendChild(settTDs);
 
             canvas.style.backgroundImage = "url(" + grasses[colorPick] + ")";
 
@@ -567,7 +576,7 @@
 
             myTable.appendChild(myHiChart);
 
-            mySnakes.innerHTML = "sneks";
+            mySnakes.innerHTML = "SNEKS";
             mySnakes.className = "sneks";
 
             for (var k = 0; k < 4; k++) {
@@ -580,6 +589,8 @@
 
                 mySnakes.appendChild(elems);
             }
+            mySnakes.appendChild(settBtn);
+
 
             body[0].appendChild(startBTN);
             body[0].appendChild(myTable);
@@ -612,7 +623,7 @@
             elems[2].style.boxShadow = "0 0 10px rgba(0,0,0,0)";
             elems[3].style.boxShadow = "0 0 10px rgba(0,0,0,0)";
 
-            elems[colorPick].style.boxShadow = "0 0 10px yellow";
+            elems[colorPick].style.boxShadow = "0 0 2px #fff inset, 0 0 5px gold inset, 0 0 10px #000 inset";
         },
         checkTracker: (snakeLen) => {
             var snLen = snakeLen - 4,
